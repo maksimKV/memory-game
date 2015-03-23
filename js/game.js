@@ -35,12 +35,12 @@ var basicGame = function($scope, $timeout){
 
 	// The reavealing functionality
 	$scope.reveal = function(image, state, src){
-		if(first_image == null && state == 'closed'){
+		if(first_image == null && second_image == null && state == 'closed'){
 			first_image = this;
 			this.state = 'opened';
 			this.src = image;
 
-		} else if(state == 'closed'){
+		} else if(second_image == null && state == 'closed'){
 			this.state = 'opened';
 			this.src = image;
 			second_image = this;
