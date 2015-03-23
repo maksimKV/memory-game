@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="memory-game">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link href="css/styles.css" media="screen" rel="stylesheet">
+	<title>Maksim Kanev's Memory Game</title>
+</head>
+
+<body>
+
+<div class="game-options">
+	<p>Select the purpose of this exercise.</p>
+
+	<div class="level">Fun</div>
+	<div class="level">Training</div>
+</div>
+
+<div class="game-options">
+	<p>Select the level of difficulty you feel most comfortable with.</p>
+
+	<div class="level">Easy</div>
+	<div class="level">Medium</div>
+	<div class="level">Hard</div>
+</div>
+
+<div id="basic-game" ng-controller="basicGame">
+	<img ng-repeat="image in images track by $index" ng-src="./images/{{src}}.jpg" alt="One of the images" ng-class="{{state}}" id="{{$index}}" ng-click="reveal(image, state, src)">
+</div>
+
+<div id="advanced-game">
+</div>
+
+<script type="text/javascript" src="js/angular.min.js"></script>
+<script type="text/javascript" src="js/game.js"></script>
+</body>
+</html>
