@@ -2,8 +2,21 @@
 
 var app = angular.module('memory-game', []);
 
-var first_image = null;
-var second_image = null;
+var game_option = null;
+var level = null;
+
+
+var setGame = function($scope){
+	$scope.start = function(value, type){
+		if(type == 'option'){
+			game_option = value;
+			$scope.game_option = value;
+		} else if(type == 'level'){
+			level = value;
+			$scope.level = value;
+		}
+	};
+};
 
 // All the images
 var image_array = ['bananas', 'books', 'cat', 'dog', 'drill',
@@ -11,25 +24,42 @@ var image_array = ['bananas', 'books', 'cat', 'dog', 'drill',
 	'sunset', 'surfer', 'swan', 'woman', 'wordpress'];
 
 var basicGame = function($scope, $timeout){
+	var first_image = null;
+	var second_image = null;
 
 	big_array = image_array.sort(function() { return 0.5 - Math.random() });
 
-	var medium_array = big_array;
+	var medium_array = big_array.slice();
 	medium_array.pop();
 
-	var small_array = medium_array;
+	var small_array = medium_array.slice();
 	small_array.pop();
 
-	big_array = big_array.concat(big_array);
-	big_array = big_array.sort(function() { return 0.5 - Math.random() });
+	$scope.$watch('level', function(){
 
-	medium_array = medium_array.concat(medium_array);
-	medium_array = medium_array.sort(function() { return 0.5 - Math.random() });
-		
-	small_array = small_array.concat(small_array);
-	small_array = small_array.sort(function() { return 0.5 - Math.random() });
+		switch(true){
+			case(level == 'hard'):
+				big_array = big_array.concat(big_array);
+				big_array = big_array.sort(function() { return 0.5 - Math.random() });
+				$scope.images = big_array;
+			break;
+
+			case(level == 'medium'):
+				medium_array = medium_array.concat(medium_array);
+				medium_array = medium_array.sort(function() { return 0.5 - Math.random() });
+				$scope.images = medium_array;
+			break;
+
+			case(level == 'easy'):
+				small_array = small_array.concat(small_array);
+				small_array = small_array.sort(function() { return 0.5 - Math.random() });
+				$scope.images = small_array;
+			break;
+		}
+	});
+
 	
-	$scope.images = small_array;
+	
 	$scope.state = 'closed';
 	$scope.src = 'question-mark';
 
@@ -64,6 +94,6 @@ var basicGame = function($scope, $timeout){
 	};
 };
 
+app.controller("setGame", ["$scope", setGame]);
 app.controller("basicGame", ["$scope", "$timeout", basicGame]);
-
 }());
