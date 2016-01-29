@@ -1,18 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" ng-app="memory-game">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="MemoryGame">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link href="css/styles.css" media="screen" rel="stylesheet">
 	<title>Maksim Kanev's Memory Game</title>
 </head>
 
-<body ng-controller="setGame">
+<body ng-controller="GameController">
 
 <div class="game-options" ng-hide="game_option || level">
 	<h3>Select the purpose of this exercise.</h3>
 
-	<div class="level" ng-click="start('easy', 'option')">Fun</div>
-	<div class="level" ng-click="start('hard', 'option')">Training</div>
+	<div class="level" ng-click="start('fun', 'option')">Fun</div>
+	<div class="level" ng-click="start('training', 'option')">Training</div>
 </div>
 
 <div class="game-options" ng-show="game_option && !level">
@@ -23,14 +23,16 @@
 	<div class="level" ng-click="start('hard', 'level')">Hard</div>
 </div>
 
-<div id="basic-game" ng-controller="basicGame" ng-show="game_option == 'easy' && level" class="ng-class: level;">
-	<img ng-repeat="image in images track by $index" ng-src="./images/{{src}}.jpg" alt="One of the images" ng-class="{{state}}" id="{{$index}}" ng-click="reveal(image, state, src)">
+<div id="basic-game" ng-show="game_option == 'fun' && level" class="ng-class: level;">
+	<img ng-repeat="image in images track by $index" ng-src="./images/{{src}}.jpg" alt="One of the images" ng-class="{{state}}" id="{{$index}}" ng-click="basicReveal(image, state, src)">
 </div>
 
 <div id="advanced-game">
 </div>
 
 <script type="text/javascript" src="js/angular.min.js"></script>
-<script type="text/javascript" src="js/game.js"></script>
+<script type="text/javascript" src="app/app.js"></script>
+<script type="text/javascript" src="app/controllers/game-controller.js"></script>
+<script type="text/javascript" src="app/services/fun-level-service.js"></script>
 </body>
 </html>
