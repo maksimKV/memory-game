@@ -19,20 +19,30 @@
 	<h3>Select the level of difficulty you feel most comfortable with.</h3>
 
 	<div class="level" ng-click="start('easy', 'level')">Easy</div>
-	<div class="level" ng-click="start('medium', 'level')">Medium</div>
+	<div class="level" ng-hide="game_option == 'training'" ng-click="start('medium', 'level')">Medium</div>
 	<div class="level" ng-click="start('hard', 'level')">Hard</div>
 </div>
 
 <div id="basic-game" ng-show="game_option == 'fun' && level" class="ng-class: level;">
-	<img ng-repeat="image in images track by $index" ng-src="./images/{{src}}.jpg" alt="One of the images" ng-class="{{state}}" id="{{$index}}" ng-click="basicReveal(image, state, src)">
+	<img ng-repeat="image in images track by $index" ng-src="./images/{{src}}.jpg" alt="One of the images" ng-class="{{state}}" ng-click="basicReveal(image, state, src)">
 </div>
 
-<div id="advanced-game">
+<div id="advanced-game" ng-show="game_option == 'training' && level">
+	<img ng-repeat="image in images track by $index" ng-src="./images/{{src}}.jpg" alt="One of the images" ng-class="[{{state}}, {{image}}]" id="{{$index}}" ng-click="advancedReveal(image, state, src)">
+</div>
+
+<div id="sidebar">
+	<div id="advanced-sidebar" ng-show="game_option == 'training' && level">
+		<h2>Find the 5 images</h2>
+		<img ng-src="./images/{{main_image}}.jpg" alt="The image to look for" ng-bind="main_image" />
+	</div>
 </div>
 
 <script type="text/javascript" src="js/angular.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.12.0.min.js"></script>
 <script type="text/javascript" src="app/app.js"></script>
 <script type="text/javascript" src="app/controllers/game-controller.js"></script>
 <script type="text/javascript" src="app/services/fun-level-service.js"></script>
+<script type="text/javascript" src="app/services/advanced-level-service.js"></script>
 </body>
 </html>
