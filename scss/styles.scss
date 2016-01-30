@@ -68,7 +68,7 @@ img {
 
 	h2 {
 		with: 200px;
-		marin: 0px 0px 10px 0px;
+		margin: 0px 0px 10px 0px;
 
 		color: #333;
 		text-align: center;
@@ -78,5 +78,38 @@ img {
 		display: block;
 		width: 124px;
 		margin: 0 auto;
+	}
+
+	#turns { 
+		margin-top: 30px;
+		color: #FF3232;
+	}
+
+	#timer {
+		margin-top: 30px;
+		font-size: 1.2em;
+	}
+
+	#new {
+		background: linear-gradient(to bottom, rgb(118, 141, 135) 5%, rgb(108, 124, 124) 100%, rgb(118, 141, 135));
+		border: 1px solid rgb(86, 105, 99);
+
+		border-radius: 6px;
+		text-shadow: rgb(43, 102, 94) 0px -1px 0px;
+
+		color: #fff;
+		font-size: 15px;
+
+		padding-top: 6px;
+		padding-bottom: 6px;
+
+		font-family: Arial;
+		cursor: pointer;
+
+		margin-top: 30px;
+
+		&:hover {
+			background: linear-gradient(to bottom, rgb(108, 124, 124) 5%, rgb(118, 141, 135) 100%, rgb(108, 124, 124));
+		}
 	}
 }

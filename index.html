@@ -33,9 +33,15 @@
 
 <div id="sidebar">
 	<div id="advanced-sidebar" ng-show="game_option == 'training' && level">
-		<h2>Find the 5 images</h2>
+		<h2>Find {{images_left}} images</h2>
 		<img ng-src="./images/{{main_image}}.jpg" alt="The image to look for" ng-bind="main_image" />
 	</div>
+
+	<h2 id="turns" ng-show="game_option && level">Turns: {{turns}}</h2>
+
+	<h2 id="time" ng-show="game_option && level">Elapsed Time: {{timer}}</h2>
+
+	<h2 id="new" ng-show="game_option && level" ng-click="restart()">Start Over</h2>
 </div>
 
 <script type="text/javascript" src="js/angular.min.js"></script>

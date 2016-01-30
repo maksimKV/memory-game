@@ -70,7 +70,7 @@ img {
 /* line 69, ../scss/styles.scss */
 #sidebar h2 {
   with: 200px;
-  marin: 0px 0px 10px 0px;
+  margin: 0px 0px 10px 0px;
   color: #333;
   text-align: center;
 }
@@ -79,4 +79,32 @@ img {
   display: block;
   width: 124px;
   margin: 0 auto;
+}
+/* line 83, ../scss/styles.scss */
+#sidebar #turns {
+  margin-top: 30px;
+  color: #FF3232;
+}
+/* line 88, ../scss/styles.scss */
+#sidebar #timer {
+  margin-top: 30px;
+  font-size: 1.2em;
+}
+/* line 93, ../scss/styles.scss */
+#sidebar #new {
+  background: linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%, #768d87);
+  border: 1px solid #566963;
+  border-radius: 6px;
+  text-shadow: #2b665e 0px -1px 0px;
+  color: #fff;
+  font-size: 15px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  font-family: Arial;
+  cursor: pointer;
+  margin-top: 30px;
+}
+/* line 111, ../scss/styles.scss */
+#sidebar #new:hover {
+  background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%, #6c7c7c);
 }

@@ -1,7 +1,7 @@
 var app = angular.module('MemoryGame');
 
-app.controller('GameController', ['$scope', '$timeout', '$interval', 'FunLevelService', 'AdvancedLevelService',
-	function($scope, $timeout, $interval, FunLevelService, AdvancedLevelService) {
+app.controller('GameController', ['$scope', '$timeout', '$interval', '$window', 'FunLevelService', 'AdvancedLevelService',
+	function($scope, $timeout, $interval, $window, FunLevelService, AdvancedLevelService) {
 
 	// Declaring the $scope variables
 	$scope.game_option = null;
@@ -16,6 +16,21 @@ app.controller('GameController', ['$scope', '$timeout', '$interval', 'FunLevelSe
 	$scope.src = 'question-mark';
 
 	$scope.main_image = 'question-mark';
+	$scope.opened_image = false;
+
+	$scope.turns = 0;
+	$scope.timer = '0.0';
+
+	$scope.timer_function;
+
+	$scope.images_left = null;
+	$scope.start_time = null;
+
+	$scope.$watch('images_left', function(){
+		if($scope.images_left < 1){
+			$scope.timerCount("stop");
+		}
+	});
 
 	$scope.$watchGroup(['game_option', 'level'], function() {
 		if($scope.game_option == "fun" && $scope.level){
@@ -36,6 +51,17 @@ app.controller('GameController', ['$scope', '$timeout', '$interval', 'FunLevelSe
 
 	$scope.basicGame = function(){
 		$scope.images = FunLevelService.setLevel($scope.level);
+
+		$scope.start_time = new Date().getTime();
+		$scope.timerCount("start");
+
+		if($scope.level == "easy"){
+			$scope.images_left = 28;
+		} else if($scope.level == "medium"){
+			$scope.images_left = 30;
+		} else if($scope.level == "hard"){
+			$scope.images_left = 32;
+		}
 	}
 
 	$scope.basicReveal = function(image, state, src){
@@ -47,6 +73,8 @@ app.controller('GameController', ['$scope', '$timeout', '$interval', 'FunLevelSe
 		} else if($scope.second_image == null && state == 'closed'){
 			this.state = 'opened';
 			this.src = image;
+
+			$scope.turns++;
 			$scope.second_image = this;
 
 			if(image != $scope.first_image.image){
@@ -63,6 +91,8 @@ app.controller('GameController', ['$scope', '$timeout', '$interval', 'FunLevelSe
 			} else {
 				$scope.first_image = null;
 				$scope.second_image = null;
+
+				$scope.images_left -= 2;
 			}
 		}
 	}
@@ -72,11 +102,17 @@ app.controller('GameController', ['$scope', '$timeout', '$interval', 'FunLevelSe
 		$scope.main_image = $scope.images.sort(function() { return 0.5 - Math.random() })[0];
 
 		$scope.autoReveal();
+		$scope.images_left = 5;
+
+		$scope.start_time = new Date().getTime();
+		$scope.timerCount("start");
 	}
 
 	$scope.autoReveal = function() {
 		var order = null;
 		var flip_speed = 1300;
+
+		$scope.opened_image = true;
 
 		if($scope.level == "easy"){
 			//Creating a two dimensional array with the order of images to be revealed
@@ -107,6 +143,7 @@ app.controller('GameController', ['$scope', '$timeout', '$interval', 'FunLevelSe
 
 				case(i == 3):
 					HideImages(i - 1);
+					$scope.opened_image = false;
 					break;
 
 				default:
@@ -133,18 +170,49 @@ app.controller('GameController', ['$scope', '$timeout', '$interval', 'FunLevelSe
 	}
 
 	$scope.advancedReveal = function(image, state, src){
-		if(state == 'closed'){
+		if(state == 'closed' && $scope.opened_image == false){
 			var current_image = this;
+			$scope.opened_image = true;
 
 			current_image.state = 'opened';
 			current_image.src = image;
+
+			$scope.turns++;
 
 			if($scope.main_image != image){
 				$timeout(function () {
 					current_image.state = $scope.state;
 					current_image.src = $scope.src;
+
+					$scope.opened_image = false;
 				}, 1000);
 			}
+			else {
+				$scope.images_left--;
+				$scope.opened_image = false;
+			}
 		}
+	}
+
+	$scope.timerCount = function(action){
+		if(action == "start"){
+			$scope.timer_function = $interval(function() {
+				var time = new Date().getTime() - $scope.start_time;
+				var elapsed = Math.floor(time / 100) / 10;
+
+				if(Math.round(elapsed) == elapsed) { 
+					elapsed += '.0'; 
+				}
+
+				$scope.timer = elapsed;
+			}, 100);
+		} else if(action == "stop"){
+			$interval.cancel($scope.timer_function);
+			$scope.opened_image = true;
+		}
+	}
+
+	$scope.restart = function(){
+		$window.location.reload();
 	}
 }]);
