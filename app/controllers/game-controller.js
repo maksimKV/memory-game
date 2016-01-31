@@ -103,9 +103,6 @@ app.controller('GameController', ['$scope', '$timeout', '$interval', '$window', 
 
 		$scope.autoReveal();
 		$scope.images_left = 5;
-
-		$scope.start_time = new Date().getTime();
-		$scope.timerCount("start");
 	}
 
 	$scope.autoReveal = function() {
@@ -144,6 +141,9 @@ app.controller('GameController', ['$scope', '$timeout', '$interval', '$window', 
 				case(i == 3):
 					HideImages(i - 1);
 					$scope.opened_image = false;
+
+					$scope.start_time = new Date().getTime();
+					$scope.timerCount("start");
 					break;
 
 				default:
