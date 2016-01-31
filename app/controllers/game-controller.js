@@ -110,7 +110,7 @@ app.controller('GameController', ['$scope', '$timeout', '$interval', '$window', 
 
 	$scope.autoReveal = function() {
 		var order = null;
-		var flip_speed = 1300;
+		var flip_speed = 1200;
 
 		$scope.opened_image = true;
 
@@ -130,7 +130,7 @@ app.controller('GameController', ['$scope', '$timeout', '$interval', '$window', 
 			var mixed_order = initial_order.sort(function() { return 0.5 - Math.random() });
 
 			order = [mixed_order.slice(0, 10), mixed_order.slice(10, 20), mixed_order.slice(20, 30)];
-			flip_speed = 1800;
+			flip_speed = 1600;
 		}
 
 		// A bit of complex logic to get the image flip properly
