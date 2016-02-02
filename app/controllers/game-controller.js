@@ -198,11 +198,21 @@ app.controller('GameController', ['$scope', '$timeout', '$interval', '$window', 
 		if(action == "start"){
 			$scope.timer_function = $interval(function() {
 				var time = new Date().getTime() - $scope.start_time;
-				var elapsed = Math.floor(time / 100) / 10;
+				var miliseconds = String(Math.floor(time / 100)).charAt(String(Math.floor(time / 100)).length - 1);
 
-				if(Math.round(elapsed) == elapsed) { 
-					elapsed += '.0'; 
+				var seconds = Math.floor((time / 1000) % 60);
+				var minutes = Math.floor(((time / 1000) / 60) % 60);
+
+				var elapsed = String(seconds) + '.' + miliseconds;
+
+				if(minutes >= 1){
+					if(seconds < 10){
+						seconds = '0' + seconds;
+					}
+
+					elapsed = String(minutes).charAt(0) + '.' + String(seconds) + '.' + miliseconds;
 				}
+				
 
 				$scope.timer = elapsed;
 			}, 100);
